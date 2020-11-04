@@ -1,7 +1,7 @@
-﻿using System;
-namespace Service
+﻿namespace Service
 {
     public interface INameService
     {
+        string GetGreeting(string name);
     }
 }

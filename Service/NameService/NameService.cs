@@ -1,8 +1,11 @@
-﻿using System;
-
-namespace Service
+﻿namespace Service
 {
-    public class Class1
+    public class NameService : INameService
     {
+        public string GetGreeting(string name)
+        {
+            return $"hello {name}";
+        }
     }
 }
+ 

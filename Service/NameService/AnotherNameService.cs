@@ -1,10 +1,10 @@
-﻿using System;
-namespace Service
+﻿namespace Service
 {
-    public class AnotherNameService
+    public class AnotherNameService : INameService
     {
-        public AnotherNameService()
+        public string GetGreeting(string name)
         {
+            return "something else";
         }
     }
 }

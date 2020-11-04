@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//using System.Threading.Tasks; ----> when we get round to async
+﻿//using System.Threading.Tasks; ----> when we get round to async
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Service;
 
 namespace TropicalWorld.Controllers
 {
@@ -11,30 +9,33 @@ namespace TropicalWorld.Controllers
     {
         public string name { get; set; }
     }
+
     [ApiController]
     [Route("[controller]")]
     public class CatsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<CatsController> _logger;
 
-        public CatsController(ILogger<CatsController> logger) => _logger = logger;
+        private readonly INameService _service;
+
+        public CatsController(ILogger<CatsController> logger, INameService service)
+        {
+            _logger = logger;
+            _service = service;
+        }
 
         [HttpGet]
         public string Get()
         {
-            //var rng = new Random();
             return "hello, Xav!";
         }
+
         [HttpPost]
         public string Post([FromBody] Req req)
         {
+            var response = _service.GetGreeting(req.name);
 
-            return $"Hello, {req.name}";
+            return response;
         }
     }
 }

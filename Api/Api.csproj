@@ -6,4 +6,9 @@
 
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'TropicalWorld' " />
+  <ItemGroup>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
