@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Data;
+using Data.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Service;
 
 namespace TropicalWorld
@@ -28,7 +24,15 @@ namespace TropicalWorld
         {
             services.AddControllers();
 
-            services.AddSingleton<INameService, NameService>();
+            services.AddSingleton<IAnimalService, AnimalService>();
+            services.AddSingleton<IAnimalCollection, AnimalCollection>();
+
+            // this will be read from appsettings - property names are identical to ease the mapping from JSON to our MongoCredentials class
+            services.Configure<MongoSettings>(
+                Configuration.GetSection(nameof(MongoSettings)));
+
+            services.AddSingleton<IMongoSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoSettings>>().Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

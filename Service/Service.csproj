@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="NameService\" />
+    <Folder Include="AnimalService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 </Project>
