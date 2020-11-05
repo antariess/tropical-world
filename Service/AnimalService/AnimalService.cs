@@ -17,7 +17,8 @@ namespace Service
 
         public async Task<IEnumerable<AnimalEntity>> GetAllAsync()
         {
-            return await _collection.GetAllAsync();
+            var entities = await _collection.GetAllAsync();
+            return entities;
         }
 
         public async Task<AnimalEntity> InsertAsync(string name)
