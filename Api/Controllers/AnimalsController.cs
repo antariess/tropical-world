@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Api.Requests;
+using Api.Responses;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,10 +26,10 @@ namespace TropicalWorld.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<AnimalEntity>> GetAll()
+        public async Task<IEnumerable<AnimalResponse>> GetAll()
         {
-            var response = await _service.GetAllAsync();
-            return response;
+            var entities = await _service.GetAllAsync();
+            return entities.Select(x => MapToResponse(x));
         }
 
         [HttpPost]
@@ -34,6 +37,17 @@ namespace TropicalWorld.Controllers
         {
             var response = await _service.InsertAsync(req.Name);
             return response;
+        }
+
+        // this would live in a helper class
+        private AnimalResponse MapToResponse(AnimalEntity entity)
+        {
+            return new AnimalResponse
+            {
+                Name = entity.Name,
+                Id = entity.Id,
+                IsRecent = entity.Added > DateTime.Parse("2020-10-31"),
+            };
         }
     }
 }
